@@ -336,7 +336,8 @@ end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 begin
-Draw1(Output.Mn/1000,output.x1,output.z1);
+form4 := Tform4.Create(application);
+form4.Show;
 end;
 
 {$ENDREGION 'ненужное'}

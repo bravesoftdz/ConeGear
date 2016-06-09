@@ -9,10 +9,8 @@ uses
   ComObj, common_unit, math, Vcl.Imaging.jpeg, Vcl.ExtCtrls, Vcl.AppEvnts;
 
 type
-
   Wheels = array of array of Double;
   MT1 = array [1 .. 13] of extended;
-
   TForm4 = class(TForm)
     Button1: TButton;
     Button2: TButton;
@@ -32,13 +30,11 @@ type
     procedure Edit4KeyPress(Sender: TObject; var Key: Char);
     procedure Button2Click(Sender: TObject);
     procedure ApplicationEvents1Exception(Sender: TObject; E: Exception);
-
   private
     { Private declarations }
   public
     { Public declarations }
   end;
-  procedure Draw1(m, x: extended; z: integer);
   const
    modulmas: MT1 = (1.0, 1.125, 1.25, 1.375, 1.5, 1.75, 2.0, 2.25, 2.5, 2.75, 3.0, 3.5, 4.0); //Массив модулей передач
 var
@@ -445,24 +441,6 @@ if MD.SelectByID('Point1', 'SKETCHPOINT', qwerty[0] , qwerty[1] , 0) then
   MD.FeatureManager.FeatureCircularPattern4(Z, 6.2831853071796, False, 'NULL', False, True, False);
 end;
 
-procedure draw1(m, x: extended; z: integer);
-begin
-  ma := formuls(m, x, z);
-  SetLength(qwerty, length(ma) * 3);
-  for I := 0 to length(ma) - 1 do
-  begin
-    qwerty[I * 3 + 1] := ma[I, 0];
-    qwerty[I * 3 ] := ma[I, 1];
-    qwerty[I * 3 + 2] := 0;
-  end;
-  A1 := VarArrayCreate([0, length(qwerty) - 1], varDouble);
-  for I := 0 to length(qwerty) - 1 do
-  begin
-    A1[I] := qwerty[I];
-  end;
-  DrawKol(m, x, z);
-end;
-
 procedure TForm4.ApplicationEvents1Exception(Sender: TObject; E: Exception);
 var
   LogFile: TextFile;
@@ -498,7 +476,20 @@ begin
   b := StrToFloat(Edit3.Text);
   x := StrToFloat(Edit4.Text);
   z := StrToInt(Edit1.Text);
-Draw1(m,x,z);
+  ma := formuls(m, x, z);
+  SetLength(qwerty, length(ma) * 3);
+  for I := 0 to length(ma) - 1 do
+  begin
+    qwerty[I * 3 + 1] := ma[I, 0];
+    qwerty[I * 3 ] := ma[I, 1];
+    qwerty[I * 3 + 2] := 0;
+  end;
+  A1 := VarArrayCreate([0, length(qwerty) - 1], varDouble);
+  for I := 0 to length(qwerty) - 1 do
+  begin
+    A1[I] := qwerty[I];
+  end;
+  DrawKol(m, x, z);
 end;
 
 procedure TForm4.Button2Click(Sender: TObject);
