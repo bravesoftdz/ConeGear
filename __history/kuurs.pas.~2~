@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, unit2, Vcl.ComCtrls, Materials, unit4, Vcl.AppEvnts;
+  Dialogs, StdCtrls, unit2, Vcl.ComCtrls, Materials, unit4;
 
 type
 {$REGION 'Класс формы'}
@@ -76,8 +76,6 @@ type
     Button1_Nom_sx: TButton;
     Label1_Nom_sx: TLabel;
     Button3: TButton;
-    Button4: TButton;
-    ApplicationEvents1: TApplicationEvents;
     procedure Button2Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -108,15 +106,11 @@ type
     procedure ComboBox1_mc2Exit(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button3Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
-    procedure ApplicationEvents1Exception(Sender: TObject; E: Exception);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
-  const
-  modulmas: MT1 = (1.0, 1.125, 1.25, 1.375, 1.5, 1.75, 2.0, 2.25, 2.5, 2.75, 3.0, 3.5, 4.0); //Массив модулей передач
 {$endREGION 'ненужное'}
 
 var
@@ -133,31 +127,6 @@ implementation
 uses Nom_sx;
 {$R *.dfm}
 {$REGION 'ненужное'}
-
-procedure TForm1.ApplicationEvents1Exception(Sender: TObject; E: Exception);
-var
-  LogFile: TextFile;
-  FileName: string;
-begin
-
-  FileName := ChangeFileExt(Application.ExeName, 'log');
-
-  AssignFile(LogFile, FileName);
-
-
-  if FileExists(FileName) then
-    Append(LogFile)
-  else
-    Rewrite(LogFile);
-
-  try
-    Writeln(LogFile, DateTimeToStr(Now) + ' ' + E.Message);
-    Application.ShowException(E);
-  finally
-    CloseFile(LogFile);
-  end;
-
-end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 var
@@ -368,18 +337,6 @@ end;
 procedure TForm1.Button3Click(Sender: TObject);
 begin
 Draw1(Output.Mn/1000,output.x1,output.z1);
-end;
-
-procedure TForm1.Button4Click(Sender: TObject);
-var
-  z,i: integer;
-  m, b, x: extended;
-begin
-  x:=0;
-  for i := 1 to Length(modulmas) do
-  for z := 18 to 30 do
-    draw1(modulmas[i],x,z);
-
 end;
 
 {$ENDREGION 'ненужное'}
